@@ -21,7 +21,9 @@
     "clean": "node ./scripts/clean.mjs",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "lint": "echo 'No linter configured'",
-    "test": "node --test",
+    "test": "node --test tests/fetchpilot.test.ts",
+    "test:e2e": "node --test tests/e2e.test.ts",
+    "test:all": "node --test",
     "prepublishOnly": "npm run clean && npm run build && npm run typecheck",
     "release": "git tag v%npm_package_version% && git push origin --tags"
   },
