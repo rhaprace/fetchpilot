@@ -10,14 +10,13 @@ npm install fetchpilot
 
 ## Usage
 
-```ts
 # fetchpilot
 
-fetchpilot is a compact, resilient HTTP client built on the native `fetch` API. It emphasizes simplicity, predictable behavior, and clean, typed results for professional-grade applications.
+fetchpilot is a compact, resilient HTTP client built on the native fetch API. It emphasizes simplicity, predictable behavior, and clean, typed results for professional-grade applications.
 
 **Key Capabilities**
 - Robust retries with exponential backoff and jitter
-- Respect for `Retry-After` on rate limits
+- Respect for Retry-After on rate limits
 - Automatic JSON parsing with an optional validation step
 - Typed, discriminated results for straightforward control flow
 - Normalized error format across environments
@@ -33,9 +32,9 @@ fetchpilot is a compact, resilient HTTP client built on the native `fetch` API. 
 
 **Configuration Options**
 - Retries: set attempt count and define conditions via a predicate.
-- Backoff: choose `exponential` or `fixed`, configure base and max delays, and jitter.
-- Parsing: select `auto`, `json`, `text`, or `stream`.
-- Timeout & abort: per-request timeout and `AbortSignal` support.
+- Backoff: choose exponential or fixed, configure base and max delays, and jitter.
+- Parsing: select auto, json, text, or stream.
+- Timeout & abort: per-request timeout and AbortSignal support.
 - Validation: optional hook to verify parsed data and surface parse errors.
 - Fetch override: provide a custom implementation when needed.
 - Cache: optional TTL for successful GET responses.
@@ -43,21 +42,21 @@ fetchpilot is a compact, resilient HTTP client built on the native `fetch` API. 
 
 **Runtime Behavior**
 - Retries apply to idempotent methods by default (GET, HEAD, OPTIONS).
-- `Retry-After` is honored when present; otherwise backoff strategy applies.
+- Retry-After is honored when present; otherwise backoff strategy applies.
 - JSON parsing is automatic based on response content type.
 - Errors are normalized and consistently typed for reliable handling.
 
 **Result Model**
-- Success: includes parsed `data`, `status`, and `headers`.
-- Failure: includes a normalized `error` type and message, with optional `status` and `headers`.
+- Success: includes parsed data, status, and headers.
+- Failure: includes a normalized error type and message, with optional status and headers.
 
 **Environment Notes**
-- Node 18+ includes global `fetch`. For older versions, supply a ponyfill via options.
+- Node 18+ includes global fetch. For older versions, supply a ponyfill via options.
 - The package intentionally avoids dependencies to remain fast, small, and easy to integrate.
 
 **Examples**
-- Example scripts for Node and the browser are provided under `examples/`.
+- Example scripts for Node and the browser are provided under the examples/ directory.
 
 **Project Links**
-- Refer to the `homepage` and `repository` fields in `package.json` for the canonical resources.
+- Refer to the homepage and repository fields in package.json for the canonical resources.
 
