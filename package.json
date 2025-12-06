@@ -21,9 +21,9 @@
     "clean": "node ./scripts/clean.mjs",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "lint": "echo 'No linter configured'",
-    "test": "node --test tests/fetchpilot.test.ts",
-    "test:e2e": "node --test tests/e2e.test.ts",
-    "test:all": "node --test",
+    "test": "node --test --import tsx tests/fetchpilot.test.ts",
+    "test:e2e": "node --test --import tsx tests/e2e.test.ts",
+    "test:all": "node --test --import tsx tests/*.test.ts",
     "prepublishOnly": "npm run clean && npm run build && npm run typecheck",
     "release": "git tag v%npm_package_version% && git push origin --tags"
   },
@@ -44,6 +44,7 @@
   "homepage": "https://github.com/rhaprace/fetchpilot#readme",
   "author": "Rafael Race",
   "devDependencies": {
+    "tsx": "^4.21.0",
     "typescript": "^5.6.3"
   }
 }
