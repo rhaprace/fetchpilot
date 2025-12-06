@@ -1,6 +1,6 @@
 {
   "name": "fetchpilot",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A tiny, resilient fetch wrapper with retries, exponential backoff, auto JSON parsing, typed results, and error normalization.",
   "type": "module",
   "main": "dist/index.cjs",
