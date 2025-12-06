@@ -11,77 +11,53 @@ npm install fetchpilot
 ## Usage
 
 ```ts
-import { fetchpilot } from 'fetchpilot';
+# fetchpilot
 
-type User = { id: string; name: string };
+fetchpilot is a compact, resilient HTTP client built on the native `fetch` API. It emphasizes simplicity, predictable behavior, and clean, typed results for professional-grade applications.
 
-const res = await fetchpilot<User>('/api/user', {
-  retries: { attempts: 3 },
-  timeout: 3000,
-  validate: (d) => (d && typeof d === 'object' && 'id' in (d as any) ? { ok: true } : { ok: false, message: 'Invalid User' }),
-});
+**Key Capabilities**
+- Robust retries with exponential backoff and jitter
+- Respect for `Retry-After` on rate limits
+- Automatic JSON parsing with an optional validation step
+- Typed, discriminated results for straightforward control flow
+- Normalized error format across environments
+- Optional request deduplication and lightweight GET caching
+- Dependency-free, ESM-first; supports browsers and Node 18+
 
-if (!res.ok) {
-  console.error(res.error.message);
-} else {
-  console.log(res.data.name);
-}
-```
+**Installation**
+- Add the package via your preferred package manager.
 
-### Examples
+**Design Overview**
+- Single-function client that accepts an input (URL or Request) plus options.
+- Returns a clear result: either a successful payload with metadata or a normalized error with context.
 
-- Node: `examples/node-basic.mjs`
-- Browser: `examples/browser-basic.html`
+**Configuration Options**
+- Retries: set attempt count and define conditions via a predicate.
+- Backoff: choose `exponential` or `fixed`, configure base and max delays, and jitter.
+- Parsing: select `auto`, `json`, `text`, or `stream`.
+- Timeout & abort: per-request timeout and `AbortSignal` support.
+- Validation: optional hook to verify parsed data and surface parse errors.
+- Fetch override: provide a custom implementation when needed.
+- Cache: optional TTL for successful GET responses.
+- Dedupe: share identical in-flight GET requests.
 
-Run the Node example after building:
+**Runtime Behavior**
+- Retries apply to idempotent methods by default (GET, HEAD, OPTIONS).
+- `Retry-After` is honored when present; otherwise backoff strategy applies.
+- JSON parsing is automatic based on response content type.
+- Errors are normalized and consistently typed for reliable handling.
 
-```powershell
-npm run build
-node examples/node-basic.mjs
-```
+**Result Model**
+- Success: includes parsed `data`, `status`, and `headers`.
+- Failure: includes a normalized `error` type and message, with optional `status` and `headers`.
 
-### Customizing retries
+**Environment Notes**
+- Node 18+ includes global `fetch`. For older versions, supply a ponyfill via options.
+- The package intentionally avoids dependencies to remain fast, small, and easy to integrate.
 
-```ts
-const res = await fetchpilot('/api/data', {
-  retries: {
-    attempts: 5,
-    retryOn: (err) => err.type === 'network' || err.type === 'timeout',
-  },
-  backoff: { strategy: 'exponential', baseDelay: 200, maxDelay: 5000, jitter: 'full' },
-  onRetry: ({ attempt, delay, error }) => console.debug(attempt, delay, error.type),
-});
-```
+**Examples**
+- Example scripts for Node and the browser are provided under `examples/`.
 
-## API
+**Project Links**
+- Refer to the `homepage` and `repository` fields in `package.json` for the canonical resources.
 
-- `fetchpilot<T>(input, options?)` → `FetcherResult<T>`
-
-### Options
-
-- `retries`: `number | { attempts?: number; retryOn?: (error, attempt) => boolean }`
-- `backoff`: `{ strategy?: 'exponential'|'fixed'; baseDelay?: number; maxDelay?: number; jitter?: 'none'|'full' }`
-- `parse`: `'auto'|'json'|'text'|'stream'` (default `'auto'`)
-- `timeout`: `number` (ms)
-- `headers`, `query`, `body`, `signal`, `onRetry`, `fetch`
-
-### Retry behavior
-
-- Defaults to retrying idempotent methods only (`GET`, `HEAD`, `OPTIONS`).
-- Honors `Retry-After` header (seconds or HTTP date) when provided; otherwise uses exponential backoff with jitter.
-
-### Result
-
-Discriminated union:
-
-- Success: `{ ok: true; data: T; status; headers }`
-- Failure: `{ ok: false; error: NormalizedError; status?; headers? }`
-
-### Error normalization
-
-`NormalizedError`: `{ type: 'network'|'timeout'|'abort'|'http'|'parse'|'unknown'; message; status?; cause? }`
-
-## Notes
-
-- Uses native `fetch`. In Node 18+, fetch is available globally. For older Node versions, pass a ponyfill via `options.fetch`.
-- Minimal, dependency-free, ESM-first.
