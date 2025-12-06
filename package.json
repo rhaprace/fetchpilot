@@ -22,9 +22,13 @@
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "lint": "echo 'No linter configured'",
     "test": "node --test",
-    "prepublishOnly": "npm run clean && npm run build && npm run typecheck"
+    "prepublishOnly": "npm run clean && npm run build && npm run typecheck",
+    "release": "git tag v%npm_package_version% && git push origin --tags"
   },
   "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
   "keywords": [
     "fetch",
     "http",
