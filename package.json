@@ -18,7 +18,7 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json && node ./scripts/build-cjs.mjs",
-    "clean": "powershell -NoProfile -Command \"if (Test-Path 'dist') { Remove-Item -Recurse -Force 'dist' }\"",
+    "clean": "node ./scripts/clean.mjs",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "lint": "echo 'No linter configured'",
     "test": "node --test",
