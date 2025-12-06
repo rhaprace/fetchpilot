@@ -8,12 +8,6 @@ A tiny, resilient fetch wrapper with retries, exponential backoff, automatic JSO
 npm install fetchpilot
 ```
 
-## Usage
-
-# fetchpilot
-
-fetchpilot is a compact, resilient HTTP client built on the native fetch API. It emphasizes simplicity, predictable behavior, and clean, typed results for professional-grade applications.
-
 **Key Capabilities**
 - Robust retries with exponential backoff and jitter
 - Respect for Retry-After on rate limits
