@@ -1,0 +1,43 @@
+{
+  "name": "fetchpilot",
+  "version": "0.1.0",
+  "description": "A tiny, resilient fetch wrapper with retries, exponential backoff, auto JSON parsing, typed results, and error normalization.",
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json && node ./scripts/build-cjs.mjs",
+    "clean": "powershell -NoProfile -Command \"if (Test-Path 'dist') { Remove-Item -Recurse -Force 'dist' }\"",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "echo 'No linter configured'",
+    "test": "node --test",
+    "prepublishOnly": "npm run clean && npm run build && npm run typecheck"
+  },
+  "license": "MIT",
+  "keywords": [
+    "fetch",
+    "http",
+    "retry",
+    "backoff",
+    "typed",
+    "json",
+    "client"
+  ],
+  "repository": "https://github.com/rhaprace/fetchpilot",
+  "homepage": "https://github.com/rhaprace/fetchpilot#readme",
+  "author": "Rafael Race",
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
+}

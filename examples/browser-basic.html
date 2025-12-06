@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>fetchpilot browser demo</title>
+  </head>
+  <body>
+    <h1>fetchpilot demo</h1>
+    <pre id="out"></pre>
+    <script type="module">
+      import { fetchpilot } from '../dist/index.js';
+      (async () => {
+        const res = await fetchpilot('https://httpbin.org/json', { retries: 2 });
+        const out = document.getElementById('out');
+        out.textContent = res.ok ? JSON.stringify(res.data, null, 2) : res.error.message;
+      })();
+    </script>
+  </body>
+  </html>
